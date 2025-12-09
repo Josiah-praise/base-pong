@@ -1,7 +1,11 @@
 const { getLeaderboardEvents } = require('../constants/socketEvents');
 
-module.exports = function emitLeaderboardUpdate(io, payload) {
+module.exports = function emitLeaderboardUpdate(emitter, payload) {
+  if (!emitter || typeof emitter.emit !== 'function') {
+    throw new Error('Emitter must expose an emit(event, payload) function');
+  }
+
   getLeaderboardEvents().forEach((eventName) => {
-    io.emit(eventName, payload);
+    emitter.emit(eventName, payload);
   });
 };
