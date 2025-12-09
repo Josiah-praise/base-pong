@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { LEADERBOARD_EVENTS } from '../constants/socketEvents';
+import { logSocketEvent } from '../utils/socketEventLogger';
 
 export const useLeaderboardUpdates = (socket, onUpdate, onEventName) => {
   useEffect(() => {
