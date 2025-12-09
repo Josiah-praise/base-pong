@@ -59,6 +59,7 @@ Enter your username and start playing!
 | Frontend (`frontend/.env`)      | `REACT_APP_BACKEND_URL` | Browser (React)  | `http://localhost:8080`      | Used for Socket.IO + REST calls. Change to the Fly.io / Base URL when deploying. |
 
 Even without this variable the frontend now tries to infer the backend URL (mapping http://localhost:3000 → http://localhost:8080) and shows an in-app warning banner if it cannot reach the server. Setting the env var explicitly is still the most predictable approach for staging/production.
+Add `REACT_APP_DEBUG_SOCKET_EVENTS=true` locally if you want the console to log every leaderboard alias event for troubleshooting.
 | Frontend                        | `FRONTEND_PORT`         | Local dev server | `3000`                       | Matches the port exposed in `docker-compose.yml`.                                |
 | Backend (`backend/.env`)        | `PLAYER_SERVICE_URL`    | Node service     | `http://player-service:5001` | Replace with `http://localhost:5001` when running everything outside Docker.     |
 | Backend                         | `BACKEND_PORT`          | Node service     | `8080`                       | Must stay in sync with `frontend/.env` target.                                   |
