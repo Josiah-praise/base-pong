@@ -89,6 +89,18 @@ const setResolutionMeta = (source, detail = '') => {
   cachedResolutionMeta = { source, detail };
 };
 
+const warnMissingBackend = (detail) => {
+  if (typeof console === 'undefined') {
+    return;
+  }
+
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
+
+  console.warn('[backend-url] Unable to resolve backend URL', detail);
+};
+
 export const getBackendUrlResolution = () => cachedResolutionMeta;
 
 export const resolveBackendUrl = () => {
@@ -106,5 +118,10 @@ export const resolveBackendUrl = () => {
   const inferred = sanitizeUrl(deriveFromWindow());
   cachedBackendUrl = inferred;
   setResolutionMeta('window', inferred ? 'window.location' : 'unresolved');
+
+  if (!inferred) {
+    warnMissingBackend('No env var or window inference available');
+  }
+
   return cachedBackendUrl;
 };
