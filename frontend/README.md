@@ -60,3 +60,4 @@ frontend/
 - `frontend/src/hooks/useContract.js` wraps wagmi for the escrow contract; update the address in `src/constants.js` when redeploying.
 - Canvas physics are authoritative from the backend, so keep UI optimizations pure (no extra physics on the client).
 - If `REACT_APP_BACKEND_URL` is missing the UI now infers it (mapping port 3000 → 8080) and shows a banner with retry controls; still set the var explicitly in CI/staging so sockets always hit the right host.
+- Set `REACT_APP_DEBUG_SOCKET_EVENTS=true` when you want the console to log every leaderboard alias event delivered to the Welcome screen.

@@ -122,7 +122,7 @@ Run these before committing to reduce hook timeouts.
    - `gameStart` - Game begins
    - `gameUpdate` - Ball/paddle positions (60 times/second)
    - `gameOver` - Match results and rating changes
-   - `leaderboardUpdate` - Live ranking updates
+   - `leaderboardUpdate (aka rankingsUpdate)` - Live ranking updates
 
 #### 2. Backend Layer (Node.js + Socket.IO)
 
@@ -174,7 +174,7 @@ Run these before committing to reduce hook timeouts.
    - Calculate ELO changes
    - Update Player Service
    - Emit `gameOver` with results
-   - Broadcast `leaderboardUpdate` to all clients
+   - Broadcast `leaderboardUpdate` (legacy alias `rankingsUpdate`) to all clients
 
 **Why Server-Side Game Logic?**
 
@@ -513,6 +513,8 @@ pnpm dev
 
 ### Frontend
 
+> Debug tip: set `REACT_APP_DEBUG_SOCKET_EVENTS=true` to log leaderboard alias events in the browser console.
+
 - React 18
 - Socket.IO Client
 - React Router v6
@@ -656,3 +658,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Original Pong game by Atari (1972)
 - Socket.IO for real-time communication
 - Docker for containerization
+
+- [Socket Events](docs/socket-events.md)

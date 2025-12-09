@@ -8,6 +8,7 @@ import { buildBackendUrl } from '../utils/backendClient';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
+import { useLeaderboardUpdates } from '../hooks/useLeaderboardUpdates';
 
 const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const [rankings, setRankings] = useState([]);
@@ -17,10 +18,25 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const [stakingInProgress, setStakingInProgress] = useState(false);
   const [selectedStakeAmount, setSelectedStakeAmount] = useState(null);
   const [pendingRoomCode, setPendingRoomCode] = useState(null);
+  const [lastLeaderboardEvent, setLastLeaderboardEvent] = useState(null);
   const [stakingErrorMessage, setStakingErrorMessage] = useState(null);
   const titleRef = useRef();
   const navigate = useNavigate();
   const socketRef = useRef(null);
+  const leaderboardPayloadRef = useRef(null);
+  const [socketInstance, setSocketInstance] = useState(null);
+
+  const handleLeaderboardUpdate = useCallback((newRankings) => {
+    console.log('Received leaderboard update:', newRankings);
+    const normalized = Array.isArray(newRankings) ? newRankings : [];
+    const serialized = JSON.stringify(normalized);
+    if (leaderboardPayloadRef.current === serialized) {
+      return;
+    }
+    leaderboardPayloadRef.current = serialized;
+    setRankings(normalized);
+  }, [leaderboardPayloadRef]);
+
 
   // Web3 hooks
   const { open } = useAppKit();
@@ -68,15 +84,11 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
     });
 
     socketRef.current = socket;
+    setSocketInstance(socket);
 
     socket.on('connect', () => {
       console.log('Socket connected');
       socket.emit('getActiveGames');
-    });
-
-    socket.on('rankingsUpdate', (newRankings) => {
-      console.log('Received rankings update:', newRankings);
-      setRankings(newRankings);
     });
 
     socket.on('activeGamesList', (games) => {
@@ -90,9 +102,12 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
 
     return () => {
       clearInterval(gamesInterval);
+      setSocketInstance(null);
       socket.disconnect();
     };
   }, []);
+
+  useLeaderboardUpdates(socketInstance, handleLeaderboardUpdate, setLastLeaderboardEvent);
 
   // Add handler to start audio after user interaction
   const handleStartAudio = useCallback(() => {
@@ -647,6 +662,11 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
         
         <div className="rankings">
           <h2>Top Players</h2>
+          {lastLeaderboardEvent ? (
+            <p className="rankings-event" data-testid="leaderboard-event">Live via {lastLeaderboardEvent}</p>
+          ) : (
+            <p className="rankings-event pending" data-testid="leaderboard-event">Waiting for live updates...</p>
+          )}
           <div className="rankings-list">
             {rankings.length > 0 ? (
               rankings.map((player, index) => (
