@@ -83,11 +83,6 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
       socket.emit('getActiveGames');
     });
 
-    socket.on('rankingsUpdate', (newRankings) => {
-      console.log('Received rankings update:', newRankings);
-      setRankings(newRankings);
-    });
-
     socket.on('activeGamesList', (games) => {
       console.log('Received active games:', games);
       setActiveGames(games);
