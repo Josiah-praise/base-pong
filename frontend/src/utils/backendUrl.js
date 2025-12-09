@@ -1,6 +1,6 @@
 const DEFAULT_BACKEND_PORT = '8080';
 const DEFAULT_PROTOCOL = 'http:';
-const LOCAL_HOSTNAMES = new Set(['localhost', '127.0.0.1']);
+const LOCAL_HOSTNAMES = new Set(['localhost', '127.0.0.1', '0.0.0.0']);
 
 const sanitizeUrl = (value) => {
   if (!value) {
