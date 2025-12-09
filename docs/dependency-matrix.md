@@ -38,8 +38,9 @@
 
 1. Prefer pnpm workspaces: run `pnpm outdated` per package before bumping.
 2. Patch-level updates can land directly. Minor/major updates require a smoke test (Docker + `pnpm start`).
-3. For Solidity deps, re-run `forge build` and record bytecode size deltas.
-4. Document all dependency PRs in `docs/dependency-matrix.md` and mention risk level (low/medium/high).
+3. For Solidity deps, re-run `forge build`, capture `forge inspect <Contract> size`, and record bytecode size deltas.
+4. Run `./scripts/test-all.sh` after every bump and paste the summary into the PR description.
+5. Document all dependency PRs in `docs/dependency-matrix.md` (include old/new version + risk level).
 
 ## Dependency bump checklist
 
