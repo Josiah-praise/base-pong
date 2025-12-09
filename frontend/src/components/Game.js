@@ -4,6 +4,7 @@ import { useAccount } from 'wagmi';
 import io from 'socket.io-client';
 import '../styles/Game.css';
 import { BACKEND_URL, INITIAL_RATING } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer2 } from '../hooks/useContract';
 
@@ -191,7 +192,7 @@ const Game = ({ username }) => {
 
   const testBackendConnection = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL || 'http://localhost:5000'}/health`);
+      const response = await fetch(buildBackendUrl('/health'));
       const data = await response.json();
       console.log('Backend health check:', data);
       return true;
