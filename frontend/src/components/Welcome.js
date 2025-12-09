@@ -22,6 +22,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const titleRef = useRef();
   const navigate = useNavigate();
   const socketRef = useRef(null);
+  const [socketInstance, setSocketInstance] = useState(null);
 
   // Web3 hooks
   const { open } = useAppKit();
