@@ -22,6 +22,18 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 
 All scripts should be executed from the repo root (`bash ./scripts/<name>.sh`).
 
+### Git hooks
+
+1. Point Git to the bundled hooks once per clone: `git config core.hooksPath .husky`.
+1. Hooks now run automatically:
+
+   - `pre-commit`: secret scan → `./scripts/lint-all.sh` → `./scripts/format-check.sh`
+   - `pre-push`: `./scripts/test-all.sh`
+
+1. Bypass intentionally (CI or emergencies): `SKIP_HOOKS=1 git commit ...` or `SKIP_SECRET_SCAN=1 git commit ...`.
+
+Documented workflows live in `STARTUP_GUIDE.md` → Contribution Workflow.
+
 ## Features
 
 ### Multiplayer Modes
