@@ -6,12 +6,24 @@ const sanitizeUrl = (value) => {
   return value.trim().replace(/\/+$/, '');
 };
 
+const buildUrlFromLocation = (location) => {
+  if (!location) {
+    return '';
+  }
+
+  const protocol = location.protocol || 'http:';
+  const host = location.hostname || 'localhost';
+  const port = location.port ? `:${location.port}` : '';
+
+  return `${protocol}//${host}${port}`;
+};
+
 const deriveFromWindow = () => {
   if (typeof window === 'undefined' || !window.location) {
     return '';
   }
 
-  return window.location.origin || '';
+  return buildUrlFromLocation(window.location);
 };
 
 export const resolveBackendUrl = () => {
