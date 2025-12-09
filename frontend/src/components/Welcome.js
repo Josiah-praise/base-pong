@@ -4,7 +4,7 @@ import { useAppKit } from '@reown/appkit/react';
 import { useAccount } from 'wagmi';
 import io from 'socket.io-client';
 import '../styles/Welcome.css';
-import { BACKEND_URL } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
@@ -38,7 +38,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
     const fetchRankings = async () => {
       try {
         console.log('Fetching rankings...');
-        const response = await fetch(`${BACKEND_URL}/api/rankings/top?limit=10`, {
+        const response = await fetch(buildBackendUrl(`/api/rankings/top?limit=10`), {
           method: 'GET',
           credentials: 'include',
           headers: {
