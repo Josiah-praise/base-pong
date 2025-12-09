@@ -28,10 +28,11 @@
 
 ## Blockchain (`blockchain/lib` and `foundry.toml`)
 
-| Package | Source | Purpose |
-| --- | --- | --- |
-| forge-std | lib/forge-std | Foundry assertions/testing helpers |
-| openzeppelin-contracts | lib/openzeppelin-contracts | ERC20 helpers & math |
+| Package | Source | Purpose | Notes |
+| --- | --- | --- | --- |
+| forge-std | lib/forge-std | Foundry assertions/testing helpers | Keep in sync with Foundry release to avoid cheatcode drift. |
+| openzeppelin-contracts | lib/openzeppelin-contracts | ERC20 helpers & math | Currently pinned to match Solidity 0.8.23; test after bumping. |
+| foundry.toml (global) | repo root | Compiler + optimizer config | Changing optimizer runs affects gas + bytecode determinism. |
 
 ## Upgrade policy
 
