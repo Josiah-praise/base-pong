@@ -127,19 +127,23 @@ Enter your username and start playing!
 
 ## 4. Troubleshooting FAQ
 
-Here are the most common blockers while developing or running the stack and how to approach them:
+Stuck while onboarding? Start with these targeted checks before escalating.
 
-### "Cannot connect to backend"
+### Q1. "Cannot connect to backend"
 
 **Fix:**
+
 ```bash
 docker-compose down
 docker-compose up --build
 ```
 
-### "Port already in use"
+If you're running services individually, confirm the frontend `.env` still points at `http://localhost:8080`.
+
+### Q2. "Port already in use"
 
 **Find what's using the port:**
+
 ```bash
 # Windows
 netstat -ano | findstr :8080
@@ -149,30 +153,36 @@ lsof -i :8080
 ```
 
 **Stop Docker and try again:**
+
 ```bash
 docker-compose down
 docker-compose up
 ```
 
-### "Services not starting"
+### Q3. "Services not starting"
 
 **Check Docker Desktop is running:**
+
 1. Open Docker Desktop application
 2. Ensure it shows "Docker Desktop is running"
 
 **Clean restart:**
+
 ```bash
 docker-compose down -v
 docker system prune -a
 docker-compose up --build
 ```
 
-### "Frontend shows blank screen"
+### Q4. "Frontend shows blank screen"
 
 **Clear browser cache:**
+
 1. Open browser DevTools (F12)
 2. Right-click refresh button
 3. Select "Empty Cache and Hard Reload"
+
+If the issue persists, open DevTools → Console to confirm there are no CORS or Socket.IO errors.
 
 ---
 
