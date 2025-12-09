@@ -658,3 +658,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Original Pong game by Atari (1972)
 - Socket.IO for real-time communication
 - Docker for containerization
+
+- [Socket Events](docs/socket-events.md)
