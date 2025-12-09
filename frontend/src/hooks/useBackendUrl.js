@@ -6,6 +6,6 @@ export const useBackendUrl = () => {
     const url = resolveBackendUrl();
     const resolution = getBackendUrlResolution();
 
-    return { url, resolution };
+    return { url, resolution, missing: !url };
   }, []);
 };
