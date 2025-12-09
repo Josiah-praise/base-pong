@@ -10,6 +10,18 @@ const sanitizeUrl = (value) => {
   return value.trim().replace(/\/+$/, '');
 };
 
+const resolveProtocol = (location) => {
+  if (!location) {
+    return DEFAULT_PROTOCOL;
+  }
+
+  if (LOCAL_HOSTNAMES.has(location.hostname)) {
+    return DEFAULT_PROTOCOL;
+  }
+
+  return location.protocol || DEFAULT_PROTOCOL;
+};
+
 const mapPort = (location) => {
   if (!location || !location.port) {
     return '';
@@ -39,7 +51,7 @@ const buildUrlFromLocation = (location) => {
     return '';
   }
 
-  const protocol = location.protocol || DEFAULT_PROTOCOL;
+  const protocol = resolveProtocol(location);
   const host = location.hostname || 'localhost';
   const port = mapPort(location) || defaultPort(location);
 
