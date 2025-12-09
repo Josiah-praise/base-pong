@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
 import { formatEther } from 'viem';
-import { BACKEND_URL } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
@@ -39,7 +39,7 @@ const MyWins = () => {
         offset: pagination.offset
       });
 
-      const response = await fetch(`${BACKEND_URL}/games/my-wins?${params}`);
+      const response = await fetch(buildBackendUrl(`/games/my-wins?${params}`));
 
       if (!response.ok) {
         throw new Error(`Failed to fetch wins: ${response.status}`);
