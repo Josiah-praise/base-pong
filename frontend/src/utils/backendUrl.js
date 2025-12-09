@@ -101,6 +101,11 @@ const warnMissingBackend = (detail) => {
   console.warn('[backend-url] Unable to resolve backend URL', detail);
 };
 
+export const resetBackendUrlCache = () => {
+  cachedBackendUrl = undefined;
+  cachedResolutionMeta = { source: 'unknown' };
+};
+
 export const getBackendUrlResolution = () => cachedResolutionMeta;
 
 export const resolveBackendUrl = () => {
