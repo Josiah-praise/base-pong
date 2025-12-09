@@ -5,14 +5,14 @@ import { useBackendHealth } from '../hooks/useBackendHealth';
 import '../styles/BackendStatusBanner.css';
 
 export const BackendStatusBanner = ({ className = '' }) => {
-  const { url, resolution } = useBackendUrl();
+  const { url, resolution, missing } = useBackendUrl();
   const { status, refresh } = useBackendHealth();
 
   if (status === 'ok') {
     return null;
   }
 
-  const message = !url
+  const message = missing
     ? 'Backend URL missing. Update REACT_APP_BACKEND_URL or rely on local fallback.'
     : status === 'error'
       ? 'Backend unreachable. Is the server running?'
