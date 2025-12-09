@@ -6,6 +6,18 @@ const sanitizeUrl = (value) => {
   return value.trim().replace(/\/+$/, '');
 };
 
+const mapPort = (location) => {
+  if (!location || !location.port) {
+    return '';
+  }
+
+  if (location.hostname === 'localhost' && location.port === '3000') {
+    return ':8080';
+  }
+
+  return `:${location.port}`;
+};
+
 const buildUrlFromLocation = (location) => {
   if (!location) {
     return '';
@@ -13,9 +25,8 @@ const buildUrlFromLocation = (location) => {
 
   const protocol = location.protocol || 'http:';
   const host = location.hostname || 'localhost';
-  const port = location.port ? `:${location.port}` : '';
 
-  return `${protocol}//${host}${port}`;
+  return `${protocol}//${host}${mapPort(location)}`;
 };
 
 const deriveFromWindow = () => {
