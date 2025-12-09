@@ -15,16 +15,16 @@
 
 ## Frontend (`frontend/package.json`)
 
-| Package | Version | Purpose |
-| --- | --- | --- |
-| react / react-dom | ^18.2.0 | UI runtime |
-| react-router-dom | ^6.8.1 | Client-side routing |
-| socket.io-client | ^4.6.0 | WebSocket client for matches |
-| wagmi | ^2.18.1 | Web3 hooks |
-| viem | ^2.38.3 | Underlying RPC client |
-| @reown/appkit (+ adapter) | ^1.6.x | Wallet connection modal |
-| @tanstack/react-query | ^5.90.5 | Data fetching cache |
-| @testing-library/* | latest | Testing utilities |
+| Package | Version | Purpose | Notes |
+| --- | --- | --- | --- |
+| react / react-dom | ^18.2.0 | UI runtime | Keep in sync with CRA requirements. |
+| react-router-dom | ^6.8.1 | Client-side routing | Critical for onboarding flow. |
+| socket.io-client | ^4.6.0 | WebSocket client for matches | Version must stay compatible with backend Socket.IO. |
+| wagmi | ^2.18.1 | Web3 hooks | Align with viem version below. |
+| viem | ^2.38.3 | Underlying RPC client | Breaking changes require wallet QA. |
+| @reown/appkit (+ adapter) | ^1.6.x | Wallet connection modal | Upgrades affect UI copy + CSS. |
+| @tanstack/react-query | ^5.90.5 | Data fetching cache | Contains React 18 concurrency helpers. |
+| @testing-library/* | latest | Testing utilities | Keep pinned to avoid jsdom drift. |
 
 ## Blockchain (`blockchain/lib` and `foundry.toml`)
 
