@@ -122,7 +122,7 @@ Run these before committing to reduce hook timeouts.
    - `gameStart` - Game begins
    - `gameUpdate` - Ball/paddle positions (60 times/second)
    - `gameOver` - Match results and rating changes
-   - `leaderboardUpdate` - Live ranking updates
+   - `leaderboardUpdate` - Live ranking updates (aliases legacy `rankingsUpdate`)
 
 #### 2. Backend Layer (Node.js + Socket.IO)
 
