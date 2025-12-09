@@ -77,7 +77,7 @@ const MyWins = () => {
       console.log('✅ Prize claimed successfully!');
 
       // Mark game as claimed in database
-      fetch(`${BACKEND_URL}/games/${claimingGameId}/claimed`, {
+      fetch(buildBackendUrl(`/games/${claimingGameId}/claimed`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ txHash: claimTxHash })
