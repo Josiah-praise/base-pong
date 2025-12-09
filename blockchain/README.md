@@ -1,66 +1,16 @@
-## Foundry
+# Blockchain Contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+The `blockchain/` folder houses the `PongEscrow` smart contract, deployment scripts, and Foundry configuration for Base mainnet and Sepolia.
 
-Foundry consists of:
+## Key commands
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- `forge build` – compile the contracts
+- `forge test` – run the Solidity tests
+- `forge fmt` – format ALL Solidity files
+- `forge script script/Deploy.s.sol:DeployScript --broadcast --rpc-url <RPC_URL>` – deploy the contract to a specific chain
 
-## Documentation
+## Notes
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- Environment variables (RPC endpoints, private keys, Etherscan keys) live in `.env`. Never check secrets into git.
+- The `broadcast/` folder stores deployment logs and transaction receipts. Check them after every broadcast.
+- `src/PongEscrow.sol` contains the escrow logic while `script/Deploy.s.sol` shows how the contract is deployed with `vm.startBroadcast`/`vm.stopBroadcast`.
