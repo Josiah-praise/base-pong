@@ -7,6 +7,7 @@ Refer to `frontend/README.md`, `backend/README.md`, and `blockchain/README.md` f
 Once the repo is cloned, follow the steps below and refer to `frontend/README.md`, `backend/README.md`, and `blockchain/README.md` for service-specific instructions.
 
 ### Prerequisites
+
 - Docker Desktop installed and running
 - 8GB RAM available
 - Ports 3000, 8080, and 5001 available
@@ -26,6 +27,7 @@ docker-compose up --build
 ```
 
 This single command will:
+
 - Build Docker images for all 3 services
 - Start containers in correct order
 - Display logs from all services
@@ -33,6 +35,7 @@ This single command will:
 **3. Wait for Services to Start**
 
 Watch the logs until you see:
+
 ```
 frontend_1         | webpack compiled successfully
 backend_1          | Server running on port 8080
@@ -51,24 +54,28 @@ Enter your username and start playing!
 
 ## 2. Environment Matrix
 
-| Component | Variable | Scope | Default | Notes |
-| --- | --- | --- | --- | --- |
-| Frontend (`frontend/.env`) | `REACT_APP_BACKEND_URL` | Browser (React) | `http://localhost:8080` | Used for Socket.IO + REST calls. Change to the Fly.io / Base URL when deploying. |
-| Frontend | `FRONTEND_PORT` | Local dev server | `3000` | Matches the port exposed in `docker-compose.yml`. |
-| Backend (`backend/.env`) | `PLAYER_SERVICE_URL` | Node service | `http://player-service:5001` | Replace with `http://localhost:5001` when running everything outside Docker. |
-| Backend | `BACKEND_PORT` | Node service | `8080` | Must stay in sync with `frontend/.env` target. |
-| Player Service (`backend/.env`) | `PLAYER_SERVICE_URL` | Node service | `http://player-service:5001` | Governs leaderboard polling + stats persistence. |
-| Blockchain (`blockchain/.env`) | `CHAIN_RPC_URL` | Foundry scripts | *(none)* | Provide a Base / Sepolia RPC endpoint (Alchemy, Blast, etc.). |
-| Blockchain | `PRIVATE_KEY` | Foundry scripts | *(none)* | Test signer for deployments; never commit real keys. |
+| Component                       | Variable                | Scope            | Default                      | Notes                                                                            |
+| ------------------------------- | ----------------------- | ---------------- | ---------------------------- | -------------------------------------------------------------------------------- |
+| Frontend (`frontend/.env`)      | `REACT_APP_BACKEND_URL` | Browser (React)  | `http://localhost:8080`      | Used for Socket.IO + REST calls. Change to the Fly.io / Base URL when deploying. |
+
+Even without this variable the frontend now tries to infer the backend URL (mapping http://localhost:3000 → http://localhost:8080) and shows an in-app warning banner if it cannot reach the server. Setting the env var explicitly is still the most predictable approach for staging/production.
+| Frontend                        | `FRONTEND_PORT`         | Local dev server | `3000`                       | Matches the port exposed in `docker-compose.yml`.                                |
+| Backend (`backend/.env`)        | `PLAYER_SERVICE_URL`    | Node service     | `http://player-service:5001` | Replace with `http://localhost:5001` when running everything outside Docker.     |
+| Backend                         | `BACKEND_PORT`          | Node service     | `8080`                       | Must stay in sync with `frontend/.env` target.                                   |
+| Player Service (`backend/.env`) | `PLAYER_SERVICE_URL`    | Node service     | `http://player-service:5001` | Governs leaderboard polling + stats persistence.                                 |
+| Blockchain (`blockchain/.env`)  | `CHAIN_RPC_URL`         | Foundry scripts  | _(none)_                     | Provide a Base / Sepolia RPC endpoint (Alchemy, Blast, etc.).                    |
+| Blockchain                      | `PRIVATE_KEY`           | Foundry scripts  | _(none)_                     | Test signer for deployments; never commit real keys.                             |
 
 > ℹ️ **Tip:** Create separate `.env.local` files when iterating outside Docker so you can switch targets without rewriting the shared sample env files. Always keep secrets (private keys, API tokens) out of source control.
 
 ## Game Modes
 
 ### 🎮 Quick Match
+
 **What:** Instant matchmaking with random online players
 
 **How to Use:**
+
 1. Click "Quick Match" button
 2. Wait for an opponent
 3. Game starts automatically when matched
@@ -78,9 +85,11 @@ Enter your username and start playing!
 ---
 
 ### ➕ Create Private Room
+
 **What:** Create a room with a shareable code to play with friends
 
 **How to Use:**
+
 1. Click "Create Private Room"
 2. Share the 6-character code (e.g., "XY4K2N") with your friend
 3. Wait for them to join
@@ -91,9 +100,11 @@ Enter your username and start playing!
 ---
 
 ### 🔗 Join Room
+
 **What:** Join a friend's game using their room code
 
 **How to Use:**
+
 1. Get the room code from your friend
 2. Click "Join Room"
 3. Enter the 6-character code
@@ -104,9 +115,11 @@ Enter your username and start playing!
 ---
 
 ### 👁 Spectate Games
+
 **What:** Watch live matches in real-time
 
 **How to Use:**
+
 1. Scroll to "Live Games" section on home screen
 2. See list of active games showing:
    - Player names
@@ -118,6 +131,7 @@ Enter your username and start playing!
 5. Click "Leave" button to stop spectating
 
 **Features:**
+
 - Real-time game updates
 - See spectator count live
 - Multiple people can spectate same game
@@ -235,6 +249,7 @@ pnpm player-service
 - Update `.env` files to use `localhost` instead of service names (see the matrix above).
 - Backend: `PLAYER_SERVICE_URL=http://localhost:5001`
 - Frontend: `REACT_APP_BACKEND_URL=http://localhost:8080`
+  (optional locally thanks to auto-detection)
 - Player service: no change needed unless you expose a custom port.
 
 ---
@@ -242,24 +257,26 @@ pnpm player-service
 ## Stopping the Application
 
 ### Stop Services
+
 ```bash
 Ctrl + C  (in terminal running docker-compose)
 ```
 
 ### Stop and Remove Containers
+
 ```bash
 docker-compose down
 ```
 
 ## 5. Additional Resources
 
-| Doc | Why it matters |
-| --- | --- |
-| [`README.md`](README.md) | High-level pitch, architecture diagram, and contribution expectations. |
-| [`frontend/README.md`](frontend/README.md) | npm/pnpm scripts, lint/test commands, and UI-specific conventions. |
-| [`backend/README.md`](backend/README.md) | Socket.IO handler overview, leaderboard service contract, and dev scripts. |
+| Doc                                            | Why it matters                                                                  |
+| ---------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`README.md`](README.md)                       | High-level pitch, architecture diagram, and contribution expectations.          |
+| [`frontend/README.md`](frontend/README.md)     | npm/pnpm scripts, lint/test commands, and UI-specific conventions.              |
+| [`backend/README.md`](backend/README.md)       | Socket.IO handler overview, leaderboard service contract, and dev scripts.      |
 | [`blockchain/README.md`](blockchain/README.md) | Foundry workflow, deployment scripts (`Deploy.s.sol`), and environment samples. |
-| [`STARTUP_GUIDE.md`](STARTUP_GUIDE.md) | You are here—share this link with teammates onboarding next. |
+| [`STARTUP_GUIDE.md`](STARTUP_GUIDE.md)         | You are here—share this link with teammates onboarding next.                    |
 
 Need something else? Drop a note in `issues.md` so we can document it in the next chunk.
 
@@ -270,6 +287,7 @@ Need something else? Drop a note in `issues.md` so we can document it in the nex
 - When opening a PR, follow `.github/PULL_REQUEST_TEMPLATE.md` to summarize implementation, list tests, and confirm documentation updates.
 
 ### Stop and Remove Everything (including volumes)
+
 ```bash
 docker-compose down -v
 ```
@@ -281,11 +299,13 @@ docker-compose down -v
 ### View Service Logs
 
 **All services:**
+
 ```bash
 docker-compose logs -f
 ```
 
 **Specific service:**
+
 ```bash
 docker-compose logs -f backend
 docker-compose logs -f frontend
@@ -295,10 +315,12 @@ docker-compose logs -f player-service
 ### Check Service Health
 
 **Visit health endpoints:**
+
 - Backend: `http://localhost:8080/health`
 - Player Service: `http://localhost:5001/health`
 
 **Expected response:**
+
 ```json
 {
   "status": "OK",
@@ -314,6 +336,7 @@ docker-compose logs -f player-service
 ### Reduce Memory Usage
 
 **Limit Docker resources:**
+
 1. Open Docker Desktop
 2. Settings → Resources
 3. Set Memory to 4GB (minimum)
@@ -322,6 +345,7 @@ docker-compose logs -f player-service
 ### Speed Up Builds
 
 **Use cached layers:**
+
 ```bash
 docker-compose build --parallel
 ```
@@ -333,27 +357,32 @@ docker-compose build --parallel
 ### Home Screen
 
 **Top Section:**
+
 - PONG-IT title with neon glow effect
 - Three game mode buttons with icons
 
 **Live Games Section:**
+
 - Shows all active games
 - Click any game to spectate
 - Real-time spectator counts
 - Game status indicators
 
 **Leaderboard:**
+
 - Top 10 players by ELO rating
 - Win/Loss statistics
 - Updates live after each game
 
 **Instructions:**
+
 - Controls explanation
 - Game rules
 
 ### In-Game
 
 **Player View:**
+
 - Player names at top
 - Live score board
 - Room code display (private rooms only)
@@ -361,6 +390,7 @@ docker-compose build --parallel
 - Touch/mouse/keyboard controls
 
 **Spectator View:**
+
 - "SPECTATING" badge
 - Spectator count
 - Leave button
@@ -374,6 +404,7 @@ docker-compose build --parallel
 ### ELO Rating System
 
 **How it works:**
+
 - All players start at 1000 rating
 - Win against higher-rated player: gain more points
 - Win against lower-rated player: gain fewer points
@@ -381,6 +412,7 @@ docker-compose build --parallel
 - Rating determines leaderboard position
 
 **Formula:**
+
 ```
 New Rating = Old Rating + K * (Actual - Expected)
 K = 32 (standard chess ELO)
@@ -390,6 +422,7 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 ### Multiple Simultaneous Games
 
 **Architecture:**
+
 - Each game runs independently
 - Separate 60 FPS loop per game
 - Isolated game state
@@ -399,6 +432,7 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 ### Real-Time Synchronization
 
 **How players stay in sync:**
+
 1. Server calculates all game physics
 2. Broadcasts game state 60 times/second
 3. Clients render received state
@@ -406,6 +440,7 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 5. Server validates and applies inputs
 
 **Benefits:**
+
 - No cheating possible
 - Perfect synchronization
 - Fair gameplay for all players
@@ -417,11 +452,13 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 ### Current Setup (Development)
 
 **Player Data:**
+
 - Stored in memory (Map data structure)
 - Lost when services restart
 - Fast access, no database overhead
 
 **Game Data:**
+
 - Temporary per-game session
 - Deleted when game ends
 - Results saved to Player Service
@@ -429,6 +466,7 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 ### Production Considerations
 
 **To add database:**
+
 1. Add MongoDB/PostgreSQL to `docker-compose.yml`
 2. Update Player Service to connect to DB
 3. Replace `Map` with database queries
@@ -439,10 +477,12 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 ## Keyboard Shortcuts
 
 **In Game:**
+
 - `↑` / `W` - Move paddle up
 - `↓` / `S` - Move paddle down
 
 **Browser:**
+
 - `F12` - Open DevTools (see console logs)
 - `Ctrl + Shift + R` - Hard refresh (clear cache)
 
@@ -451,15 +491,18 @@ Expected = 1 / (1 + 10^((Opponent - Player)/400))
 ## Support
 
 **Issues:**
+
 - GitHub: https://github.com/escapeSeq/k-pong/issues
 
 **Logs Location:**
+
 - Docker logs: `docker-compose logs -f`
 - Browser console: F12 → Console tab
 
 **Common Log Patterns:**
 
 Good:
+
 ```
 ✓ Server running on port 8080
 ✓ Socket connected with ID: abc123
@@ -467,6 +510,7 @@ Good:
 ```
 
 Bad:
+
 ```
 ✗ Connection error: ECONNREFUSED
 ✗ Socket error: timeout
