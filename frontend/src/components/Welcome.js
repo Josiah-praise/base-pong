@@ -18,6 +18,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const [stakingInProgress, setStakingInProgress] = useState(false);
   const [selectedStakeAmount, setSelectedStakeAmount] = useState(null);
   const [pendingRoomCode, setPendingRoomCode] = useState(null);
+  const [lastLeaderboardEvent, setLastLeaderboardEvent] = useState(null);
   const [stakingErrorMessage, setStakingErrorMessage] = useState(null);
   const titleRef = useRef();
   const navigate = useNavigate();
