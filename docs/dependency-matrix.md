@@ -50,4 +50,6 @@
 - [ ] (Frontend) Run `pnpm build` to ensure CRA still bundles.
 - [ ] (Backend) Hit `/health` locally or via Thunder Client.
 - [ ] (Blockchain) Run `forge build && forge test`.
+- [ ] Rebuild Docker images (`docker compose build`) when bumping runtime dependencies.
 - [ ] Update this matrix if versions change.
+- [ ] Add release notes / changelog entry if the dependency impacts users.
