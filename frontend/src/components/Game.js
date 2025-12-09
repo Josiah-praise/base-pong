@@ -545,7 +545,7 @@ const Game = ({ username }) => {
       console.log('Player 2 staking successful! Updating game record...');
 
       // Update game record with Player 2 data
-      fetch(`${BACKEND_URL}/games`, {
+      fetch(buildBackendUrl('/games'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
