@@ -1,0 +1,22 @@
+.backend-status-banner {
+  background: #ffe8d9;
+  border: 1px solid #f5b383;
+  color: #4a2b16;
+  margin: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.backend-status-banner strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.backend-status-banner p {
+  margin: 0 0 4px;
+}
+
+.backend-status-banner small {
+  color: #7e4f2a;
+}
