@@ -62,7 +62,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
 
     fetchRankings();
 
-    const socket = io(BACKEND_URL, {
+    const socket = io(buildBackendUrl(), {
       withCredentials: true,
       transports: ['websocket']
     });
