@@ -1,7 +1,14 @@
 const DEFAULT_BACKEND_PORT = '8080';
 const DEFAULT_PROTOCOL = 'http:';
 const DEFAULT_HOST = 'localhost';
-const LOCAL_HOSTNAMES = new Set([DEFAULT_HOST, '127.0.0.1', '0.0.0.0']);
+const LOCAL_EQUIVALENT_HOSTS = new Set([
+  DEFAULT_HOST,
+  '127.0.0.1',
+  '0.0.0.0',
+  'host.docker.internal',
+]);
+
+const isLocalHost = (hostname) => LOCAL_EQUIVALENT_HOSTS.has(hostname);
 
 const sanitizeUrl = (value) => {
   if (!value) {
@@ -24,7 +31,7 @@ const resolveProtocol = (location) => {
     return DEFAULT_PROTOCOL;
   }
 
-  if (LOCAL_HOSTNAMES.has(location.hostname)) {
+  if (isLocalHost(location.hostname)) {
     return DEFAULT_PROTOCOL;
   }
 
@@ -36,7 +43,7 @@ const mapPort = (location) => {
     return '';
   }
 
-  if (LOCAL_HOSTNAMES.has(location.hostname) && location.port === '3000') {
+  if (isLocalHost(location.hostname) && location.port === '3000') {
     return `:${DEFAULT_BACKEND_PORT}`;
   }
 
@@ -48,7 +55,7 @@ const defaultPort = (location) => {
     return '';
   }
 
-  if (LOCAL_HOSTNAMES.has(location.hostname)) {
+  if (isLocalHost(location.hostname)) {
     return `:${DEFAULT_BACKEND_PORT}`;
   }
 
