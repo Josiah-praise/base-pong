@@ -20,3 +20,17 @@
 .backend-status-banner small {
   color: #7e4f2a;
 }
+
+.backend-status-banner .retry-button {
+  background: transparent;
+  border: 1px solid #f5b383;
+  color: #4a2b16;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.backend-status-banner .retry-button:hover {
+  background: rgba(245, 179, 131, 0.2);
+}
