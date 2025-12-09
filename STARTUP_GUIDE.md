@@ -51,15 +51,17 @@ Enter your username and start playing!
 
 ## 2. Environment Matrix
 
-| Variable | Purpose | Example |
-| --- | --- | --- |
-| `REACT_APP_BACKEND_URL` | Frontend target for Socket.IO + REST calls | `http://localhost:8080` |
-| `PLAYER_SERVICE_URL` | Backend endpoint for polling leaderboard / stats | `http://localhost:5001` |
-| `BACKEND_PORT` | Port backend listens on when run locally | `8080` |
-| `FRONTEND_PORT` | Port React dev server uses | `3000` |
-| `CHAIN_RPC_URL` | RPC endpoint for blockchain deployments (Base/Sepolia) | `https://base-mainnet.g.alchemy.com/v2/...` |
+| Component | Variable | Scope | Default | Notes |
+| --- | --- | --- | --- | --- |
+| Frontend (`frontend/.env`) | `REACT_APP_BACKEND_URL` | Browser (React) | `http://localhost:8080` | Used for Socket.IO + REST calls. Change to the Fly.io / Base URL when deploying. |
+| Frontend | `FRONTEND_PORT` | Local dev server | `3000` | Matches the port exposed in `docker-compose.yml`. |
+| Backend (`backend/.env`) | `PLAYER_SERVICE_URL` | Node service | `http://player-service:5001` | Replace with `http://localhost:5001` when running everything outside Docker. |
+| Backend | `BACKEND_PORT` | Node service | `8080` | Must stay in sync with `frontend/.env` target. |
+| Player Service (`backend/.env`) | `PLAYER_SERVICE_URL` | Node service | `http://player-service:5001` | Governs leaderboard polling + stats persistence. |
+| Blockchain (`blockchain/.env`) | `CHAIN_RPC_URL` | Foundry scripts | *(none)* | Provide a Base / Sepolia RPC endpoint (Alchemy, Blast, etc.). |
+| Blockchain | `PRIVATE_KEY` | Foundry scripts | *(none)* | Test signer for deployments; never commit real keys. |
 
-Keep secrets (private keys, API keys) in `.env` and never commit them.
+> ℹ️ **Tip:** Create separate `.env.local` files when iterating outside Docker so you can switch targets without rewriting the shared sample env files. Always keep secrets (private keys, API tokens) out of source control.
 
 ## Game Modes
 
