@@ -9,6 +9,7 @@ import GameHistory from './components/GameHistory';
 import { Web3Provider } from './components/Web3Provider';
 import './styles/App.css';
 import { STORAGE_KEY } from './constants';
+import BackendStatusBanner from './components/BackendStatusBanner';
 
 function App() {
   const [gameState, setGameState] = useState({
@@ -37,6 +38,7 @@ function App() {
     <Web3Provider>
       <Router>
         <div className="App">
+          <BackendStatusBanner />
           <Routes>
             <Route
               path="/"
