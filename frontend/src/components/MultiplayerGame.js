@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import io from 'socket.io-client';
 import '../styles/Game.css';
-import { BACKEND_URL, INITIAL_RATING } from '../constants';
+import { INITIAL_RATING } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer2 } from '../hooks/useContract';
 
@@ -258,7 +259,7 @@ const MultiplayerGame = ({ username }) => {
       console.log('✅ Player2 staking successful! Updating game record...');
 
       // Update backend with Player2's transaction
-      fetch(`${BACKEND_URL}/games`, {
+      fetch(buildBackendUrl('/games'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
