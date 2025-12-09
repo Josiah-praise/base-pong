@@ -2,16 +2,16 @@
 
 ## Backend (`backend/package.json`)
 
-| Package | Version | Purpose |
-| --- | --- | --- |
-| express | ^4.17.1 | REST + Socket.IO HTTP server |
-| socket.io | ^4.4.0 | Realtime channel for matches |
-| mongoose | ^6.0.13 | Mongo driver for Player/Game data |
-| ethers | ^6.15.0 | Signer utilities for escrow signatures |
-| cors | ^2.8.5 | Browser access control |
-| dotenv | ^17.2.3 | Loads env vars |
-| node-fetch | ^2.6.7 | HTTP helper for service-to-service calls |
-| uuid | ^9.0.0 | Room code generation fallback |
+| Package | Version | Purpose | Criticality |
+| --- | --- | --- | --- |
+| express | ^4.17.1 | REST + Socket.IO HTTP server | 🔥 High — entire API stack |
+| socket.io | ^4.4.0 | Realtime channel for matches | 🔥 High — gameplay transport |
+| mongoose | ^6.0.13 | Mongo driver for Player/Game data | 🔥 High — persistence |
+| ethers | ^6.15.0 | Signer utilities for escrow signatures | ⚠️ Medium — staking only |
+| cors | ^2.8.5 | Browser access control | ⚠️ Medium — regressions break onboarding |
+| dotenv | ^17.2.3 | Loads env vars | ⚠️ Medium |
+| node-fetch | ^2.6.7 | HTTP helper for service-to-service calls | ⚠️ Medium |
+| uuid | ^9.0.0 | Room code generation fallback | ✅ Low |
 
 ## Frontend (`frontend/package.json`)
 
