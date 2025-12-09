@@ -200,6 +200,12 @@ Ctrl + C  (in terminal running docker-compose)
 docker-compose down
 ```
 
+## Contribution Workflow
+
+- Review `CONTRIBUTING.md` for branching, commit, and PR expectations before making changes.
+- Use `.github/ISSUE_TEMPLATE/bug_report.md` or `.github/ISSUE_TEMPLATE/feature_request.md` to describe any new work so reviewers have context.
+- When opening a PR, follow `.github/PULL_REQUEST_TEMPLATE.md` to summarize implementation, list tests, and confirm documentation updates.
+
 ### Stop and Remove Everything (including volumes)
 ```bash
 docker-compose down -v
