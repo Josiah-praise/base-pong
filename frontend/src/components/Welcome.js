@@ -93,6 +93,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
 
     return () => {
       clearInterval(gamesInterval);
+      setSocketInstance(null);
       socket.disconnect();
     };
   }, []);
