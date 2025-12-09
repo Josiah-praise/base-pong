@@ -1,0 +1,55 @@
+# Dependency Matrix
+
+## Backend (`backend/package.json`)
+
+| Package | Version | Purpose | Criticality |
+| --- | --- | --- | --- |
+| express | ^4.17.1 | REST + Socket.IO HTTP server | 🔥 High — entire API stack |
+| socket.io | ^4.4.0 | Realtime channel for matches | 🔥 High — gameplay transport |
+| mongoose | ^6.0.13 | Mongo driver for Player/Game data | 🔥 High — persistence |
+| ethers | ^6.15.0 | Signer utilities for escrow signatures | ⚠️ Medium — staking only |
+| cors | ^2.8.5 | Browser access control | ⚠️ Medium — regressions break onboarding |
+| dotenv | ^17.2.3 | Loads env vars | ⚠️ Medium |
+| node-fetch | ^2.6.7 | HTTP helper for service-to-service calls | ⚠️ Medium |
+| uuid | ^9.0.0 | Room code generation fallback | ✅ Low |
+
+## Frontend (`frontend/package.json`)
+
+| Package | Version | Purpose | Notes |
+| --- | --- | --- | --- |
+| react / react-dom | ^18.2.0 | UI runtime | Keep in sync with CRA requirements. |
+| react-router-dom | ^6.8.1 | Client-side routing | Critical for onboarding flow. |
+| socket.io-client | ^4.6.0 | WebSocket client for matches | Version must stay compatible with backend Socket.IO. |
+| wagmi | ^2.18.1 | Web3 hooks | Align with viem version below. |
+| viem | ^2.38.3 | Underlying RPC client | Breaking changes require wallet QA. |
+| @reown/appkit (+ adapter) | ^1.6.x | Wallet connection modal | Upgrades affect UI copy + CSS. |
+| @tanstack/react-query | ^5.90.5 | Data fetching cache | Contains React 18 concurrency helpers. |
+| @testing-library/* | latest | Testing utilities | Keep pinned to avoid jsdom drift. |
+
+## Blockchain (`blockchain/lib` and `foundry.toml`)
+
+| Package | Source | Purpose | Notes |
+| --- | --- | --- | --- |
+| forge-std | lib/forge-std | Foundry assertions/testing helpers | Keep in sync with Foundry release to avoid cheatcode drift. |
+| openzeppelin-contracts | lib/openzeppelin-contracts | ERC20 helpers & math | Currently pinned to match Solidity 0.8.23; test after bumping. |
+| foundry.toml (global) | repo root | Compiler + optimizer config | Changing optimizer runs affects gas + bytecode determinism. |
+
+## Upgrade policy
+
+1. Prefer pnpm workspaces: run `pnpm outdated` per package before bumping.
+2. Patch-level updates can land directly. Minor/major updates require a smoke test (Docker + `pnpm start`).
+3. For Solidity deps, re-run `forge build`, capture `forge inspect <Contract> size`, and record bytecode size deltas.
+4. Run `./scripts/test-all.sh` after every bump and paste the summary into the PR description.
+5. Document all dependency PRs in `docs/dependency-matrix.md` (include old/new version + risk level).
+
+## Dependency bump checklist
+
+- [ ] Run `pnpm install` at root to refresh lockfiles.
+- [ ] Update the relevant `package.json` or `foundry.toml` entries.
+- [ ] Execute `./scripts/lint-all.sh` and `./scripts/test-all.sh`.
+- [ ] (Frontend) Run `pnpm build` to ensure CRA still bundles.
+- [ ] (Backend) Hit `/health` locally or via Thunder Client.
+- [ ] (Blockchain) Run `forge build && forge test`.
+- [ ] Rebuild Docker images (`docker compose build`) when bumping runtime dependencies.
+- [ ] Update this matrix if versions change.
+- [ ] Add release notes / changelog entry if the dependency impacts users.

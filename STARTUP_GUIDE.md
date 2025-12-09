@@ -1,6 +1,10 @@
 # PONG-IT Startup Guide
 
-## Quick Start
+## 1. Quick Start
+
+Refer to `frontend/README.md`, `backend/README.md`, and `blockchain/README.md` for service-specific commands in addition to the steps below.
+
+Once the repo is cloned, follow the steps below and refer to `frontend/README.md`, `backend/README.md`, and `blockchain/README.md` for service-specific instructions.
 
 ### Prerequisites
 - Docker Desktop installed and running
@@ -44,6 +48,20 @@ Navigate to: `http://localhost:3000`
 Enter your username and start playing!
 
 ---
+
+## 2. Environment Matrix
+
+| Component | Variable | Scope | Default | Notes |
+| --- | --- | --- | --- | --- |
+| Frontend (`frontend/.env`) | `REACT_APP_BACKEND_URL` | Browser (React) | `http://localhost:8080` | Used for Socket.IO + REST calls. Change to the Fly.io / Base URL when deploying. |
+| Frontend | `FRONTEND_PORT` | Local dev server | `3000` | Matches the port exposed in `docker-compose.yml`. |
+| Backend (`backend/.env`) | `PLAYER_SERVICE_URL` | Node service | `http://player-service:5001` | Replace with `http://localhost:5001` when running everything outside Docker. |
+| Backend | `BACKEND_PORT` | Node service | `8080` | Must stay in sync with `frontend/.env` target. |
+| Player Service (`backend/.env`) | `PLAYER_SERVICE_URL` | Node service | `http://player-service:5001` | Governs leaderboard polling + stats persistence. |
+| Blockchain (`blockchain/.env`) | `CHAIN_RPC_URL` | Foundry scripts | *(none)* | Provide a Base / Sepolia RPC endpoint (Alchemy, Blast, etc.). |
+| Blockchain | `PRIVATE_KEY` | Foundry scripts | *(none)* | Test signer for deployments; never commit real keys. |
+
+> ℹ️ **Tip:** Create separate `.env.local` files when iterating outside Docker so you can switch targets without rewriting the shared sample env files. Always keep secrets (private keys, API tokens) out of source control.
 
 ## Game Modes
 
@@ -107,19 +125,25 @@ Enter your username and start playing!
 
 ---
 
-## Troubleshooting
+## 4. Troubleshooting FAQ
 
-### "Cannot connect to backend"
+Stuck while onboarding? Start with these targeted checks before escalating.
+
+### Q1. "Cannot connect to backend"
 
 **Fix:**
+
 ```bash
 docker-compose down
 docker-compose up --build
 ```
 
-### "Port already in use"
+If you're running services individually, confirm the frontend `.env` still points at `http://localhost:8080`.
+
+### Q2. "Port already in use"
 
 **Find what's using the port:**
+
 ```bash
 # Windows
 netstat -ano | findstr :8080
@@ -129,62 +153,89 @@ lsof -i :8080
 ```
 
 **Stop Docker and try again:**
+
 ```bash
 docker-compose down
 docker-compose up
 ```
 
-### "Services not starting"
+### Q3. "Services not starting"
 
 **Check Docker Desktop is running:**
+
 1. Open Docker Desktop application
 2. Ensure it shows "Docker Desktop is running"
 
 **Clean restart:**
+
 ```bash
 docker-compose down -v
 docker system prune -a
 docker-compose up --build
 ```
 
-### "Frontend shows blank screen"
+### Q4. "Frontend shows blank screen"
 
 **Clear browser cache:**
+
 1. Open browser DevTools (F12)
 2. Right-click refresh button
 3. Select "Empty Cache and Hard Reload"
 
+If the issue persists, open DevTools → Console to confirm there are no CORS or Socket.IO errors.
+
 ---
 
-## Development Mode
+## 3. Docker vs Local Development
 
-### Run Services Individually
+Use Docker for parity, but don’t be afraid to run services on your host when iterating quickly.
 
-**Backend:**
+### When to prefer Docker
+
+- One command (`docker-compose up --build`) brings up the full stack.
+- Matches Fly.io/Base deployment networking (service names instead of `localhost`).
+- Lowest friction for new contributors—no global Node/Foundry setup required.
+
+### When to prefer local dev
+
+- Hot reload is noticeably faster for the React frontend + Node backend.
+- Easier to attach debuggers or run unit tests in watch mode.
+- Works well when you only need a subset of services (e.g., backend + blockchain).
+
+> 📎 Keep Docker running for the dependencies you are not touching (e.g., run backend locally but keep player service in Docker).
+
+### Running services individually
+
+**Backend** (see `backend/README.md` for scripts):
+
 ```bash
 cd backend
 pnpm install
 pnpm dev
 ```
 
-**Frontend:**
+**Frontend** (`frontend/README.md` has lint/test commands):
+
 ```bash
 cd frontend
 pnpm install
 pnpm start
 ```
 
-**Player Service:**
+**Player Service** (lives under `backend/src/models` but shares the same pnpm workspace):
+
 ```bash
-cd player-service
+cd backend
 pnpm install
-pnpm dev
+pnpm player-service
 ```
 
-**Note:** When running locally (not Docker):
-- Update `.env` files to use `localhost` instead of service names
+### Local-only environment tweaks
+
+- Update `.env` files to use `localhost` instead of service names (see the matrix above).
 - Backend: `PLAYER_SERVICE_URL=http://localhost:5001`
 - Frontend: `REACT_APP_BACKEND_URL=http://localhost:8080`
+- Player service: no change needed unless you expose a custom port.
 
 ---
 
@@ -199,6 +250,24 @@ Ctrl + C  (in terminal running docker-compose)
 ```bash
 docker-compose down
 ```
+
+## 5. Additional Resources
+
+| Doc | Why it matters |
+| --- | --- |
+| [`README.md`](README.md) | High-level pitch, architecture diagram, and contribution expectations. |
+| [`frontend/README.md`](frontend/README.md) | npm/pnpm scripts, lint/test commands, and UI-specific conventions. |
+| [`backend/README.md`](backend/README.md) | Socket.IO handler overview, leaderboard service contract, and dev scripts. |
+| [`blockchain/README.md`](blockchain/README.md) | Foundry workflow, deployment scripts (`Deploy.s.sol`), and environment samples. |
+| [`STARTUP_GUIDE.md`](STARTUP_GUIDE.md) | You are here—share this link with teammates onboarding next. |
+
+Need something else? Drop a note in `issues.md` so we can document it in the next chunk.
+
+## Contribution Workflow
+
+- Review `CONTRIBUTING.md` for branching, commit, and PR expectations before making changes.
+- Use `.github/ISSUE_TEMPLATE/bug_report.md` or `.github/ISSUE_TEMPLATE/feature_request.md` to describe any new work so reviewers have context.
+- When opening a PR, follow `.github/PULL_REQUEST_TEMPLATE.md` to summarize implementation, list tests, and confirm documentation updates.
 
 ### Stop and Remove Everything (including volumes)
 ```bash
