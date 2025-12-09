@@ -24,6 +24,12 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const socketRef = useRef(null);
   const [socketInstance, setSocketInstance] = useState(null);
 
+  const handleLeaderboardUpdate = useCallback((newRankings) => {
+    console.log('Received leaderboard update:', newRankings);
+    setRankings(Array.isArray(newRankings) ? newRankings : []);
+  }, []);
+
+
   // Web3 hooks
   const { open } = useAppKit();
   const { address, isConnected } = useAccount();
