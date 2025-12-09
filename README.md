@@ -40,6 +40,17 @@ Documented workflows live in `STARTUP_GUIDE.md` → Contribution Workflow.
 - `.vscode/settings.json` toggles format-on-save with Prettier and configures the Solidity extension.
 - `.vscode/extensions.json` recommends Prettier, ESLint, GitLens, and the Solidity plugin—install them when VS Code prompts.
 
+### Formatting & lint workflow
+
+```bash
+pnpm --filter frontend lint    # CRA lint (ESLint)
+pnpm --filter backend lint     # Runs eslint/prettier via nodemon env
+./scripts/format-check.sh      # Prettier check for JS/CSS + Solidity formatter
+./scripts/lint-all.sh          # Aggregated lint + forge fmt --check
+```
+
+Run these before committing to reduce hook timeouts.
+
 ## Features
 
 ### Multiplayer Modes
