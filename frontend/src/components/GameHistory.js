@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BACKEND_URL } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import '../styles/GameHistory.css';
 
 const GameHistory = ({ savedUsername }) => {
@@ -32,7 +32,7 @@ const GameHistory = ({ savedUsername }) => {
       }
 
       const response = await fetch(
-        `${BACKEND_URL}/games/player/${savedUsername}/history?${params}`
+        buildBackendUrl(`/games/player/${savedUsername}/history?${params}`)
       );
 
       if (!response.ok) {
