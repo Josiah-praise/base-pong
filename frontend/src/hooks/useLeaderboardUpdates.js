@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import { LEADERBOARD_EVENTS } from '../constants/socketEvents';
 import { logSocketEvent } from '../utils/socketEventLogger';
 
+/**
+ * Subscribes to leaderboard socket events (new + legacy) and funnels them
+ * through a single handler, optionally reporting which event fired.
+ */
 export const useLeaderboardUpdates = (socket, onUpdate, onEventName) => {
   useEffect(() => {
     if (!socket || typeof onUpdate !== 'function') {
