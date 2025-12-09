@@ -12,6 +12,10 @@ export const useLeaderboardUpdates = (socket, onUpdate, onEventName) => {
       return undefined;
     }
 
+    if (typeof socket.on !== 'function' || typeof socket.off !== 'function') {
+      return undefined;
+    }
+
     const listeners = new Map();
 
     LEADERBOARD_EVENTS.forEach((eventName) => {
