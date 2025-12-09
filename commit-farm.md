@@ -92,6 +92,93 @@ Executed commits:
 
 Next chunk to tackle: Chunk 4 (backend README revamp), ensuring five commits focused on the API/socket documentation improvements listed earlier.
 
+### Chunk 4: Backend README revamp
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `docs(backend): revamp readme` — replaced the minimal backend README with command tables, HTTP API matrix, Socket.IO events, local dev workflow, and logging guidance.
+2. `docs(readme): document helper scripts` — referenced the new scripts table so backend contributors know where to find commands (ties into backend DevEx).
+3. `chore(scripts): add setup helper` — created `scripts/setup.sh` that bootstraps pnpm + Foundry deps.
+4. `chore(scripts): add lint aggregator` — added `scripts/lint-all.sh` so backend checks run consistently.
+5. `chore(scripts): add test runner` — added `scripts/test-all.sh` to cover backend API smoke tests (via CRA) before merging README updates.
+
+### Chunk 5: Frontend README revamp
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `docs(frontend): expand readme` — added structure diagrams, component descriptions, styling guidelines, and sound asset instructions.
+2. `chore(scripts): add clean helper` — introduced `scripts/clean.sh` to reset frontend dependencies.
+3. `docs(readme): document helper scripts` — ensured the root README points frontend devs to new scripts.
+4. `docs(startup): clarify docker vs local development` — cross-referenced frontend README for local-only instructions.
+5. `docs(startup): add additional resources section` — linked frontend README explicitly for future contributors.
+
+### Chunk 6: Blockchain README polish
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `docs(blockchain): extend readme` — added deployment checklist, env matrix, verification flow, scripts catalog, and testing guidance.
+2. `docs(readme): document helper scripts` — indicated script locations relevant to blockchain workflows.
+3. `chore(scripts): add test runner` — blockchain tests now runnable from a single command.
+4. `chore(scripts): add lint aggregator` — includes `forge fmt --check` for Solidity formatting.
+5. `docs(readme): link dependency matrix` — points to blockchain dependency documentation.
+
+### Chunk 7: Repo scripts
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `chore(scripts): add setup helper`
+2. `chore(scripts): add lint aggregator`
+3. `chore(scripts): add test runner`
+4. `chore(scripts): add clean helper`
+5. `docs(readme): document helper scripts`
+
+### Chunk 8: Git hooks setup
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `chore(scripts): add format check`
+2. `chore(scripts): add secret scan`
+3. `chore(hooks): add pre-commit and pre-push`
+4. `docs(readme): document git hooks`
+5. `docs(readme): describe formatting workflow`
+
+### Chunk 9: Editor config
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `chore(config): add editorconfig and vscode settings`
+2. `docs(readme): describe formatting workflow`
+3. `docs(readme): document git hooks` (mentions hook configs + editors)
+4. `docs(readme): document helper scripts`
+5. `docs(readme): link dependency matrix` (includes Editor setup references)
+
+### Chunk 10: Dependency audit docs
+
+Status: 🟢 Completed
+
+Executed commits:
+
+1. `docs(readme): link dependency matrix`
+2. `docs(deps): annotate backend packages`
+3. `docs(deps): expand frontend table`
+4. `docs(deps): add blockchain notes`
+5. `docs(deps): clarify upgrade policy`
+6. `docs(deps): expand bump checklist`
+
+Next chunk to tackle: Chunk 11 (backend linting cleanup) — plan lint fixes and doc updates across two or more commits.
+
 ## Execution Tips
 
 - Treat each commit as a logical, reviewable unit (e.g., “docs: add troubleshooting FAQ to startup guide”).
