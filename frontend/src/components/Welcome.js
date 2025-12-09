@@ -70,6 +70,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
     });
 
     socketRef.current = socket;
+    setSocketInstance(socket);
 
     socket.on('connect', () => {
       console.log('Socket connected');
