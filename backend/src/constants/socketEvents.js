@@ -1,1 +1,3 @@
-module.exports = {};
+module.exports = {
+  LEADERBOARD_UPDATE: 'leaderboardUpdate'
+};
