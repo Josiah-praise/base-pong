@@ -316,7 +316,7 @@ const MultiplayerGame = ({ username }) => {
   const setupSocket = useCallback(() => {
     if (!isMounted.current || !username) return;
 
-    const socket = io(BACKEND_URL, {
+    const socket = io(buildBackendUrl(), {
       withCredentials: true,
       transports: ['websocket'],
       path: '/socket.io/',
