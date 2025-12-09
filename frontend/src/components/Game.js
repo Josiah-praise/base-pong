@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import io from 'socket.io-client';
 import '../styles/Game.css';
-import { BACKEND_URL, INITIAL_RATING } from '../constants';
+import { INITIAL_RATING } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer2 } from '../hooks/useContract';
 
@@ -191,7 +192,7 @@ const Game = ({ username }) => {
 
   const testBackendConnection = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL || 'http://localhost:5000'}/health`);
+      const response = await fetch(buildBackendUrl('/health'));
       const data = await response.json();
       console.log('Backend health check:', data);
       return true;
@@ -238,7 +239,7 @@ const Game = ({ username }) => {
 
     console.log('Setting up socket for username:', username);
 
-    const newSocket = io(BACKEND_URL || 'http://localhost:5000', {
+    const newSocket = io(buildBackendUrl(), {
       withCredentials: true,
       transports: ['websocket'],
       path: '/socket.io/',
@@ -544,7 +545,7 @@ const Game = ({ username }) => {
       console.log('Player 2 staking successful! Updating game record...');
 
       // Update game record with Player 2 data
-      fetch(`${BACKEND_URL}/games`, {
+      fetch(buildBackendUrl('/games'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

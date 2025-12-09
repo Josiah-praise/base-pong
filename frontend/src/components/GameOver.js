@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import { STORAGE_KEY, BACKEND_URL } from '../constants';
+import { STORAGE_KEY } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 import '../styles/GameOver.css';
 
 const GameOver = () => {
@@ -24,7 +25,7 @@ const GameOver = () => {
       return;
     }
 
-    const socket = io(BACKEND_URL, {
+    const socket = io(buildBackendUrl(), {
       withCredentials: true,
       transports: ['websocket'],
       path: '/socket.io/',

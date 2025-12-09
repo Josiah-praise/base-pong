@@ -13,12 +13,12 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 
 ### Repository scripts
 
-| Script | Description |
-| --- | --- |
-| `./scripts/setup.sh` | Installs frontend/backend dependencies and ensures Foundry libraries are fetched. Run this after cloning or pulling. |
-| `./scripts/lint-all.sh` | Runs ESLint against the React app and `forge fmt --check` against Solidity sources. |
-| `./scripts/test-all.sh` | Executes CRA tests in CI mode and `forge test` for the escrow contract. |
-| `./scripts/clean.sh` | Removes `node_modules`, Foundry build artifacts, and tears down Docker containers. Useful when resetting your workspace. |
+| Script                  | Description                                                                                                              |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `./scripts/setup.sh`    | Installs frontend/backend dependencies and ensures Foundry libraries are fetched. Run this after cloning or pulling.     |
+| `./scripts/lint-all.sh` | Runs ESLint against the React app and `forge fmt --check` against Solidity sources.                                      |
+| `./scripts/test-all.sh` | Executes CRA tests in CI mode and `forge test` for the escrow contract.                                                  |
+| `./scripts/clean.sh`    | Removes `node_modules`, Foundry build artifacts, and tears down Docker containers. Useful when resetting your workspace. |
 
 All scripts should be executed from the repo root (`bash ./scripts/<name>.sh`).
 
@@ -266,6 +266,9 @@ services:
     restart: unless-stopped
 
   player-service:
+
+> Note: The frontend now attempts to auto-detect the backend URL (falling back to http://localhost:8080 when the UI runs on port 3000) and surfaces a warning banner if it cannot reach the server. Setting REACT_APP_BACKEND_URL explicitly is still recommended for clarity, but a missing value will no longer break local fetch/socket calls.
+
     build: ./player-service
     ports: ["5001:5001"]
     networks: [app-network]

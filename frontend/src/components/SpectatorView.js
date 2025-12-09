@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 import '../styles/Game.css';
-import { BACKEND_URL } from '../constants';
+import { buildBackendUrl } from '../utils/backendClient';
 
 const SpectatorView = () => {
   const canvasRef = useRef(null);
@@ -73,7 +73,7 @@ const SpectatorView = () => {
       return;
     }
 
-    const socket = io(BACKEND_URL, {
+    const socket = io(buildBackendUrl(), {
       withCredentials: true,
       transports: ['websocket'],
       path: '/socket.io/'

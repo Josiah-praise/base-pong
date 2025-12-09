@@ -4,13 +4,13 @@ The React SPA under `frontend/` renders the lobby, gameplay canvas, and wallet-p
 
 ## Key commands
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm install` | Install dependencies (shared lockfile in repo root). |
-| `pnpm start` | Launch Vite/CRA dev server on `http://localhost:3000`. |
-| `pnpm build` | Produce static assets for Fly.io. |
-| `pnpm test` | Run component tests (Jest + React Testing Library). |
-| `pnpm lint` | Apply ESLint/Prettier rules (configured in root). |
+| Command        | Purpose                                                |
+| -------------- | ------------------------------------------------------ |
+| `pnpm install` | Install dependencies (shared lockfile in repo root).   |
+| `pnpm start`   | Launch Vite/CRA dev server on `http://localhost:3000`. |
+| `pnpm build`   | Produce static assets for Fly.io.                      |
+| `pnpm test`    | Run component tests (Jest + React Testing Library).    |
+| `pnpm lint`    | Apply ESLint/Prettier rules (configured in root).      |
 
 ## Project structure
 
@@ -34,13 +34,13 @@ frontend/
 
 ## Primary components
 
-| Component | Responsibility | Notes |
-| --- | --- | --- |
-| `App` | Bootstraps providers (Web3, sound, routing). | See `src/Web3Provider.js` for wagmi config. |
-| `MultiplayerGame` | Core gameplay canvas + Socket.IO wiring. | Consumes `useContract` + `soundManager`. |
-| `GameHistory` / `MyWins` | Lists finished matches + claimable wins. | Hits `/games/my-wins` via backend REST. |
-| `Welcome` | Landing CTA, wallet connect, quick-match entry point. | Uses audio cues in `soundManager`. |
-| `SpectatorView` | Renders live matches for observers. | Subscribes to `spectateGame` events. |
+| Component                | Responsibility                                        | Notes                                       |
+| ------------------------ | ----------------------------------------------------- | ------------------------------------------- |
+| `App`                    | Bootstraps providers (Web3, sound, routing).          | See `src/Web3Provider.js` for wagmi config. |
+| `MultiplayerGame`        | Core gameplay canvas + Socket.IO wiring.              | Consumes `useContract` + `soundManager`.    |
+| `GameHistory` / `MyWins` | Lists finished matches + claimable wins.              | Hits `/games/my-wins` via backend REST.     |
+| `Welcome`                | Landing CTA, wallet connect, quick-match entry point. | Uses audio cues in `soundManager`.          |
+| `SpectatorView`          | Renders live matches for observers.                   | Subscribes to `spectateGame` events.        |
 
 ## Styling conventions
 
@@ -59,3 +59,4 @@ frontend/
 
 - `frontend/src/hooks/useContract.js` wraps wagmi for the escrow contract; update the address in `src/constants.js` when redeploying.
 - Canvas physics are authoritative from the backend, so keep UI optimizations pure (no extra physics on the client).
+- If `REACT_APP_BACKEND_URL` is missing the UI now infers it (mapping port 3000 → 8080) and shows a banner with retry controls; still set the var explicitly in CI/staging so sockets always hit the right host.
