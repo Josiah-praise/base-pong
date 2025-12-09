@@ -104,6 +104,8 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
     };
   }, []);
 
+  useLeaderboardUpdates(socketInstance, handleLeaderboardUpdate);
+
   // Add handler to start audio after user interaction
   const handleStartAudio = useCallback(() => {
     if (!audioStarted) {
