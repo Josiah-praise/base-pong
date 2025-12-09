@@ -51,6 +51,11 @@ pnpm --filter backend lint     # Runs eslint/prettier via nodemon env
 
 Run these before committing to reduce hook timeouts.
 
+### Dependency audit docs
+
+- Review `docs/dependency-matrix.md` for backend/frontend package tables, Foundry libraries, upgrade policy, and the required checklist before bumping versions.
+- When bumping a dependency, copy the checklist into your PR description and tick each item.
+
 ## Features
 
 ### Multiplayer Modes
