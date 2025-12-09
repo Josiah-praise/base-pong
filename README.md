@@ -513,6 +513,8 @@ pnpm dev
 
 ### Frontend
 
+> Debug tip: set `REACT_APP_DEBUG_SOCKET_EVENTS=true` to log leaderboard alias events in the browser console.
+
 - React 18
 - Socket.IO Client
 - React Router v6
