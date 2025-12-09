@@ -8,6 +8,8 @@ const LOCAL_EQUIVALENT_HOSTS = new Set([
   'host.docker.internal',
 ]);
 
+let cachedBackendUrl;
+
 const isLocalHost = (hostname) => LOCAL_EQUIVALENT_HOSTS.has(hostname);
 
 const sanitizeUrl = (value) => {
@@ -83,10 +85,16 @@ const deriveFromWindow = () => {
 };
 
 export const resolveBackendUrl = () => {
-  const envOverride = sanitizeUrl(process.env.REACT_APP_BACKEND_URL);
-  if (envOverride) {
-    return envOverride;
+  if (typeof cachedBackendUrl === 'string') {
+    return cachedBackendUrl;
   }
 
-  return sanitizeUrl(deriveFromWindow());
+  const envOverride = sanitizeUrl(process.env.REACT_APP_BACKEND_URL);
+  if (envOverride) {
+    cachedBackendUrl = envOverride;
+    return cachedBackendUrl;
+  }
+
+  cachedBackendUrl = sanitizeUrl(deriveFromWindow());
+  return cachedBackendUrl;
 };
