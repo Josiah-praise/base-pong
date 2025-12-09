@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { resolveBackendUrl } from '../utils/backendUrl';
 
 export const useBackendHealth = () => {
   const [status, setStatus] = useState('unknown');
 
-  useEffect(() => {
+  const runCheck = React.useCallback(() => {
     const url = resolveBackendUrl();
     if (!url) {
       setStatus('missing-url');
-      return;
+      return () => {};
     }
 
     let cancelled = false;
+    setStatus((current) => (current === 'missing-url' ? current : 'checking'));
 
     fetch(`${url}/health`)
       .then((response) => {
@@ -32,5 +33,9 @@ export const useBackendHealth = () => {
     };
   }, []);
 
-  return status;
+  useEffect(() => {
+    return runCheck();
+  }, [runCheck]);
+
+  return { status, refresh: runCheck };
 };
