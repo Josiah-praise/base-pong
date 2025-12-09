@@ -29,7 +29,7 @@ export const BackendStatusBanner = ({ className = '' }) => {
           Retry connection
         </button>
       )}
-      <small>Resolved via: {resolution.source}</small>
+      <small>Resolved via: {resolution.source} {resolution.detail && `(${resolution.detail})`}</small>
     </div>
   );
 };
