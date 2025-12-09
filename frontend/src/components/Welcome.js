@@ -23,12 +23,19 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const titleRef = useRef();
   const navigate = useNavigate();
   const socketRef = useRef(null);
+  const leaderboardPayloadRef = useRef(null);
   const [socketInstance, setSocketInstance] = useState(null);
 
   const handleLeaderboardUpdate = useCallback((newRankings) => {
     console.log('Received leaderboard update:', newRankings);
-    setRankings(Array.isArray(newRankings) ? newRankings : []);
-  }, []);
+    const normalized = Array.isArray(newRankings) ? newRankings : [];
+    const serialized = JSON.stringify(normalized);
+    if (leaderboardPayloadRef.current === serialized) {
+      return;
+    }
+    leaderboardPayloadRef.current = serialized;
+    setRankings(normalized);
+  }, [leaderboardPayloadRef]);
 
 
   // Web3 hooks
