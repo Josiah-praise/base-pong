@@ -655,6 +655,9 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
         
         <div className="rankings">
           <h2>Top Players</h2>
+          {lastLeaderboardEvent && (
+            <p className="rankings-event">Live via {lastLeaderboardEvent}</p>
+          )}
           <div className="rankings-list">
             {rankings.length > 0 ? (
               rankings.map((player, index) => (
