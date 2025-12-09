@@ -188,35 +188,54 @@ If the issue persists, open DevTools → Console to confirm there are no CORS or
 
 ## 3. Docker vs Local Development
 
-Use Docker to spin up the full stack (`docker-compose up --build`) for consistent environments. For faster iteration, start services locally (see the individual service READMEs listed above) and point them to `localhost`.
+Use Docker for parity, but don’t be afraid to run services on your host when iterating quickly.
 
-### Run Services Individually
+### When to prefer Docker
 
-**Backend:**
+- One command (`docker-compose up --build`) brings up the full stack.
+- Matches Fly.io/Base deployment networking (service names instead of `localhost`).
+- Lowest friction for new contributors—no global Node/Foundry setup required.
+
+### When to prefer local dev
+
+- Hot reload is noticeably faster for the React frontend + Node backend.
+- Easier to attach debuggers or run unit tests in watch mode.
+- Works well when you only need a subset of services (e.g., backend + blockchain).
+
+> 📎 Keep Docker running for the dependencies you are not touching (e.g., run backend locally but keep player service in Docker).
+
+### Running services individually
+
+**Backend** (see `backend/README.md` for scripts):
+
 ```bash
 cd backend
 pnpm install
 pnpm dev
 ```
 
-**Frontend:**
+**Frontend** (`frontend/README.md` has lint/test commands):
+
 ```bash
 cd frontend
 pnpm install
 pnpm start
 ```
 
-**Player Service:**
+**Player Service** (lives under `backend/src/models` but shares the same pnpm workspace):
+
 ```bash
-cd player-service
+cd backend
 pnpm install
-pnpm dev
+pnpm player-service
 ```
 
-**Note:** When running locally (not Docker):
-- Update `.env` files to use `localhost` instead of service names
+### Local-only environment tweaks
+
+- Update `.env` files to use `localhost` instead of service names (see the matrix above).
 - Backend: `PLAYER_SERVICE_URL=http://localhost:5001`
 - Frontend: `REACT_APP_BACKEND_URL=http://localhost:8080`
+- Player service: no change needed unless you expose a custom port.
 
 ---
 
