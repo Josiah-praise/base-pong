@@ -21,7 +21,7 @@ export const BackendStatusBanner = ({ className = '' }) => {
   const showRetry = status === 'error' || status === 'checking';
 
   return (
-    <div className={`backend-status-banner ${className}`}>
+    <div className={`backend-status-banner ${className}`} data-testid="backend-status-banner">
       <strong>Backend connection issue</strong>
       <p>{message}</p>
       {showRetry && (
