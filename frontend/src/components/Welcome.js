@@ -142,7 +142,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
       console.log('✅ All conditions met! Staking successful! Creating game record...');
 
       // Notify backend about the staked match
-      fetch(`${BACKEND_URL}/games`, {
+      fetch(buildBackendUrl('/games'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
