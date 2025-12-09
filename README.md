@@ -11,6 +11,17 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 2. Alternatively, start each service directly with `pnpm --filter frontend dev`, `pnpm --filter backend dev`, and `pnpm --filter player-service dev` (or run `pnpm dev`/`pnpm start` inside the respective directories).
 3. Visit `http://localhost:3000`, `http://localhost:8080`, and `http://localhost:5001` to ensure the frontend, backend, and player service dashboards are healthy.
 
+### Repository scripts
+
+| Script | Description |
+| --- | --- |
+| `./scripts/setup.sh` | Installs frontend/backend dependencies and ensures Foundry libraries are fetched. Run this after cloning or pulling. |
+| `./scripts/lint-all.sh` | Runs ESLint against the React app and `forge fmt --check` against Solidity sources. |
+| `./scripts/test-all.sh` | Executes CRA tests in CI mode and `forge test` for the escrow contract. |
+| `./scripts/clean.sh` | Removes `node_modules`, Foundry build artifacts, and tears down Docker containers. Useful when resetting your workspace. |
+
+All scripts should be executed from the repo root (`bash ./scripts/<name>.sh`).
+
 ## Features
 
 ### Multiplayer Modes
@@ -530,13 +541,13 @@ k-pong/
 
 ## Repository Layout
 
-| Directory | Purpose | Reference |
-| --- | --- | --- |
-| `frontend/` | React UI, routing, canvas/Audio logic | [`frontend/README.md`](frontend/README.md) |
-| `backend/` | Socket.IO server, matchmaking, game physics | [`backend/README.md`](backend/README.md) |
-| `player-service/` | REST API for player stats and leaderboard | `player-service/` (see README) |
-| `blockchain/` | Foundry contracts, deployment scripts, and docs | [`blockchain/README.md`](blockchain/README.md) |
-| `scripts/` | (planned) reusable shell scripts for setup/lint/test | `scripts/` |
+| Directory         | Purpose                                              | Reference                                      |
+| ----------------- | ---------------------------------------------------- | ---------------------------------------------- |
+| `frontend/`       | React UI, routing, canvas/Audio logic                | [`frontend/README.md`](frontend/README.md)     |
+| `backend/`        | Socket.IO server, matchmaking, game physics          | [`backend/README.md`](backend/README.md)       |
+| `player-service/` | REST API for player stats and leaderboard            | `player-service/` (see README)                 |
+| `blockchain/`     | Foundry contracts, deployment scripts, and docs      | [`blockchain/README.md`](blockchain/README.md) |
+| `scripts/`        | (planned) reusable shell scripts for setup/lint/test | `scripts/`                                     |
 
 ## Glossary
 
