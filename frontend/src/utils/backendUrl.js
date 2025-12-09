@@ -9,6 +9,7 @@ const LOCAL_EQUIVALENT_HOSTS = new Set([
 ]);
 
 let cachedBackendUrl;
+let cachedResolutionMeta = { source: 'unknown' };
 
 const isLocalHost = (hostname) => LOCAL_EQUIVALENT_HOSTS.has(hostname);
 
@@ -84,6 +85,12 @@ const deriveFromWindow = () => {
   return buildUrlFromLocation(window.location);
 };
 
+const setResolutionMeta = (source, detail = '') => {
+  cachedResolutionMeta = { source, detail };
+};
+
+export const getBackendUrlResolution = () => cachedResolutionMeta;
+
 export const resolveBackendUrl = () => {
   if (typeof cachedBackendUrl === 'string') {
     return cachedBackendUrl;
@@ -92,9 +99,12 @@ export const resolveBackendUrl = () => {
   const envOverride = sanitizeUrl(process.env.REACT_APP_BACKEND_URL);
   if (envOverride) {
     cachedBackendUrl = envOverride;
+    setResolutionMeta('env', 'REACT_APP_BACKEND_URL');
     return cachedBackendUrl;
   }
 
-  cachedBackendUrl = sanitizeUrl(deriveFromWindow());
+  const inferred = sanitizeUrl(deriveFromWindow());
+  cachedBackendUrl = inferred;
+  setResolutionMeta('window', inferred ? 'window.location' : 'unresolved');
   return cachedBackendUrl;
 };
