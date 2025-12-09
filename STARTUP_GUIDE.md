@@ -253,9 +253,15 @@ docker-compose down
 
 ## 5. Additional Resources
 
-- [`frontend/README.md`](frontend/README.md): React commands, linting, and gameplay UI notes.
-- [`backend/README.md`](backend/README.md): Socket.IO server commands and architecture reminders.
-- [`blockchain/README.md`](blockchain/README.md): Foundry toolchain, deployment scripts, and `.env` guidance.
+| Doc | Why it matters |
+| --- | --- |
+| [`README.md`](README.md) | High-level pitch, architecture diagram, and contribution expectations. |
+| [`frontend/README.md`](frontend/README.md) | npm/pnpm scripts, lint/test commands, and UI-specific conventions. |
+| [`backend/README.md`](backend/README.md) | Socket.IO handler overview, leaderboard service contract, and dev scripts. |
+| [`blockchain/README.md`](blockchain/README.md) | Foundry workflow, deployment scripts (`Deploy.s.sol`), and environment samples. |
+| [`STARTUP_GUIDE.md`](STARTUP_GUIDE.md) | You are here—share this link with teammates onboarding next. |
+
+Need something else? Drop a note in `issues.md` so we can document it in the next chunk.
 
 ## Contribution Workflow
 
