@@ -655,8 +655,10 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
         
         <div className="rankings">
           <h2>Top Players</h2>
-          {lastLeaderboardEvent && (
+          {lastLeaderboardEvent ? (
             <p className="rankings-event">Live via {lastLeaderboardEvent}</p>
+          ) : (
+            <p className="rankings-event pending">Waiting for live updates...</p>
           )}
           <div className="rankings-list">
             {rankings.length > 0 ? (
