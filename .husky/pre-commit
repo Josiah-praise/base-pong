@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "${SKIP_HOOKS:-0}" = "1" ]; then
+  echo "Skipping git hooks because SKIP_HOOKS=1."
+  exit 0
+fi
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+"$REPO_ROOT/scripts/check-secrets.sh"
+"$REPO_ROOT/scripts/lint-all.sh"
+"$REPO_ROOT/scripts/format-check.sh"
