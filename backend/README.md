@@ -41,7 +41,7 @@ The server exposes a single namespace using the default path (`/socket.io/`). No
 | `paddleMove`                                                              | client → server | `{ roomCode, direction }` | Forwarded to physics loop at 60 FPS.                                    |
 | `pauseGame` / `forfeitGame`                                               | client → server | `void`                    | Controlled game state changes; results broadcast via `gameState`.       |
 | `requestRematch`/`rematchResponse`                                        | bidirectional   | metadata                  | Negotiates rematch using existing room.                                 |
-| `getLeaderboard`                                                          | client → server | `void`                    | Emits `leaderboardUpdate` with top 10.                                  |
+| `getLeaderboard`                                                          | client → server | `void`                    | Emits `leaderboardUpdate` (aliases `rankingsUpdate`) with top 10.       |
 | `roomCreated`, `roomReady`, `waitingForPlayer2Stake`, `stakedMatchJoined` | server → client | metadata                  | Lifecycle notifications for UI flows.                                   |
 
 See `multiplayerHandler.js` for the authoritative list.
