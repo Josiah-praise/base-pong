@@ -1,6 +1,7 @@
 const DEFAULT_BACKEND_PORT = '8080';
 const DEFAULT_PROTOCOL = 'http:';
-const LOCAL_HOSTNAMES = new Set(['localhost', '127.0.0.1', '0.0.0.0']);
+const DEFAULT_HOST = 'localhost';
+const LOCAL_HOSTNAMES = new Set([DEFAULT_HOST, '127.0.0.1', '0.0.0.0']);
 
 const sanitizeUrl = (value) => {
   if (!value) {
@@ -8,6 +9,14 @@ const sanitizeUrl = (value) => {
   }
 
   return value.trim().replace(/\/+$/, '');
+};
+
+const resolveHostname = (location) => {
+  if (!location || !location.hostname) {
+    return DEFAULT_HOST;
+  }
+
+  return location.hostname;
 };
 
 const resolveProtocol = (location) => {
@@ -52,7 +61,7 @@ const buildUrlFromLocation = (location) => {
   }
 
   const protocol = resolveProtocol(location);
-  const host = location.hostname || 'localhost';
+  const host = resolveHostname(location);
   const port = mapPort(location) || defaultPort(location);
 
   return `${protocol}//${host}${port}`;
