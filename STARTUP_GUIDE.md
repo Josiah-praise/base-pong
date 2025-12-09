@@ -1,6 +1,10 @@
 # PONG-IT Startup Guide
 
-## Quick Start
+## 1. Quick Start
+
+Refer to `frontend/README.md`, `backend/README.md`, and `blockchain/README.md` for service-specific commands in addition to the steps below.
+
+Once the repo is cloned, follow the steps below and refer to `frontend/README.md`, `backend/README.md`, and `blockchain/README.md` for service-specific instructions.
 
 ### Prerequisites
 - Docker Desktop installed and running
@@ -44,6 +48,18 @@ Navigate to: `http://localhost:3000`
 Enter your username and start playing!
 
 ---
+
+## 2. Environment Matrix
+
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `REACT_APP_BACKEND_URL` | Frontend target for Socket.IO + REST calls | `http://localhost:8080` |
+| `PLAYER_SERVICE_URL` | Backend endpoint for polling leaderboard / stats | `http://localhost:5001` |
+| `BACKEND_PORT` | Port backend listens on when run locally | `8080` |
+| `FRONTEND_PORT` | Port React dev server uses | `3000` |
+| `CHAIN_RPC_URL` | RPC endpoint for blockchain deployments (Base/Sepolia) | `https://base-mainnet.g.alchemy.com/v2/...` |
+
+Keep secrets (private keys, API keys) in `.env` and never commit them.
 
 ## Game Modes
 
@@ -107,7 +123,9 @@ Enter your username and start playing!
 
 ---
 
-## Troubleshooting
+## 4. Troubleshooting FAQ
+
+Here are the most common blockers while developing or running the stack and how to approach them:
 
 ### "Cannot connect to backend"
 
@@ -156,7 +174,9 @@ docker-compose up --build
 
 ---
 
-## Development Mode
+## 3. Docker vs Local Development
+
+Use Docker to spin up the full stack (`docker-compose up --build`) for consistent environments. For faster iteration, start services locally (see the individual service READMEs listed above) and point them to `localhost`.
 
 ### Run Services Individually
 
@@ -199,6 +219,12 @@ Ctrl + C  (in terminal running docker-compose)
 ```bash
 docker-compose down
 ```
+
+## 5. Additional Resources
+
+- [`frontend/README.md`](frontend/README.md): React commands, linting, and gameplay UI notes.
+- [`backend/README.md`](backend/README.md): Socket.IO server commands and architecture reminders.
+- [`blockchain/README.md`](blockchain/README.md): Foundry toolchain, deployment scripts, and `.env` guidance.
 
 ## Contribution Workflow
 
