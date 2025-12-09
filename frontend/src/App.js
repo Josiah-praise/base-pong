@@ -10,8 +10,13 @@ import { Web3Provider } from './components/Web3Provider';
 import './styles/App.css';
 import { STORAGE_KEY } from './constants';
 import BackendStatusBanner from './components/BackendStatusBanner';
+import { logBackendUrlResolution } from './utils/backendDiagnostics';
 
 function App() {
+  useEffect(() => {
+    logBackendUrlResolution();
+  }, []);
+
   const [gameState, setGameState] = useState({
     player1: null,
     player2: null,
