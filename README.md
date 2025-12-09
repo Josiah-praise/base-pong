@@ -174,7 +174,7 @@ Run these before committing to reduce hook timeouts.
    - Calculate ELO changes
    - Update Player Service
    - Emit `gameOver` with results
-   - Broadcast `leaderboardUpdate` to all clients
+   - Broadcast `leaderboardUpdate` (legacy alias `rankingsUpdate`) to all clients
 
 **Why Server-Side Game Logic?**
 
