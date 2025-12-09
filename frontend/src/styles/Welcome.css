@@ -801,3 +801,8 @@ dialog.stake-modal h2 {
     font-size: 0.8rem;
   }
 } 
+.rankings-event {
+  font-size: 0.9rem;
+  margin: 4px 0 8px;
+  color: #8cc0ff;
+}
