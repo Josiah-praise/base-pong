@@ -34,6 +34,12 @@ All scripts should be executed from the repo root (`bash ./scripts/<name>.sh`).
 
 Documented workflows live in `STARTUP_GUIDE.md` → Contribution Workflow.
 
+### Editor setup
+
+- `.editorconfig` enforces LF endings, 2-space indents (4 for Solidity), and no trailing whitespace in code files.
+- `.vscode/settings.json` toggles format-on-save with Prettier and configures the Solidity extension.
+- `.vscode/extensions.json` recommends Prettier, ESLint, GitLens, and the Solidity plugin—install them when VS Code prompts.
+
 ## Features
 
 ### Multiplayer Modes
