@@ -18,6 +18,18 @@ const mapPort = (location) => {
   return `:${location.port}`;
 };
 
+const defaultPort = (location) => {
+  if (!location || location.port) {
+    return '';
+  }
+
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    return ':8080';
+  }
+
+  return '';
+};
+
 const buildUrlFromLocation = (location) => {
   if (!location) {
     return '';
@@ -25,8 +37,9 @@ const buildUrlFromLocation = (location) => {
 
   const protocol = location.protocol || 'http:';
   const host = location.hostname || 'localhost';
+  const port = mapPort(location) || defaultPort(location);
 
-  return `${protocol}//${host}${mapPort(location)}`;
+  return `${protocol}//${host}${port}`;
 };
 
 const deriveFromWindow = () => {
